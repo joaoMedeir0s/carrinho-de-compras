@@ -1,6 +1,6 @@
 # Carrinho de Compras - Haskell
 
-Projeto desenvolvido para a disciplina **Paradigmas de Linguagens de Computação (PLC)**. O sistema simula a lógica de backend de um e-commerce com catálogo de produtos, controle de carrinho de compras, cadastro/login de usuários e finalização de pedido (checkout).
+Projeto desenvolvido para a disciplina **Paradigmas de Linguagens da Programação (PLP)**. O sistema simula a lógica de backend de um e-commerce com catálogo de produtos, controle de carrinho de compras, cadastro/login de usuários e finalização de pedido (checkout).
 
 ---
 
