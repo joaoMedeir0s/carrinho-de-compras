@@ -9,6 +9,8 @@ module Produto
 
 import Data.List (isInfixOf)
 import Data.Char (toLower)
+import qualified Data.Map as Map
+import Data.Map (Map)
 
 data Produto = Produto
     { idProduto :: Int
@@ -20,21 +22,19 @@ data Produto = Produto
     } deriving (Show, Eq)
 
 -- Retorna apenas os produtos que possuem estoque maior que zero
-listarEmEstoque :: [Produto] -> [Produto]
-listarEmEstoque produtos = filter (\p -> estoque p > 0) produtos
+listarEmEstoque :: Map Int Produto -> [Produto]
+listarEmEstoque produtos = filter (\p -> estoque p > 0) (Map.elems produtos)
 
 -- Busca produtos por uma categoria específica
-buscarPorCategoria :: [Produto] -> String -> [Produto]
-buscarPorCategoria produtos cat = filter (\p -> categoria p == cat) produtos
+buscarPorCategoria :: Map Int Produto -> String -> [Produto]
+buscarPorCategoria produtos cat = filter (\p -> categoria p == cat) (Map.elems produtos)
 
 -- Busca produtos pelo nome (ignora maiúsculas e minúsculas)
-buscarPorNome :: [Produto] -> String -> [Produto]
+buscarPorNome :: Map Int Produto -> String -> [Produto]
 buscarPorNome produtos termo = 
-    filter (\p -> map toLower termo `isInfixOf` map toLower (nome p)) produtos
+    filter (\p -> map toLower termo `isInfixOf` map toLower (nome p)) (Map.elems produtos)
 
--- Atualiza o estoque de um produto específico na lista buscando pelo ID
-atualizarEstoque :: [Produto] -> Int -> Int -> [Produto]
-atualizarEstoque [] _ _ = []
-atualizarEstoque (p:ps) idBuscado novoEstoque
-    | idProduto p == idBuscado = p { estoque = novoEstoque } : ps
-    | otherwise                = p : atualizarEstoque ps idBuscado novoEstoque
+-- Atualiza o estoque de um produto específico
+atualizarEstoque :: Map Int Produto -> Int -> Int -> Map Int Produto
+atualizarEstoque produtos idBuscado novoEstoque =
+    Map.adjust (\p -> p { estoque = novoEstoque }) idBuscado produtos
