@@ -31,10 +31,10 @@ buscarUsuario (u:us) emailUsuario
 
 -- Retorna Nothing caso o email já exista
 cadastrarUsuario :: [Usuario]
-                  -> String
-                  -> String
-                  -> String
-                  -> Maybe [Usuario]
+                -> String
+                -> String
+                -> String
+                -> Maybe [Usuario]
 
 cadastrarUsuario usuarios nomeUsuario emailUsuario senhaUsuario
     | usuarioExiste usuarios emailUsuario = Nothing
@@ -48,13 +48,13 @@ cadastrarUsuario usuarios nomeUsuario emailUsuario senhaUsuario
 -- Realiza autenticação
 -- Retorna o usuário autenticado ou Nothing
 autenticarUsuario :: [Usuario]
-                  -> String
-                  -> String
-                  -> Maybe Usuario
+                -> String
+                -> String
+                -> Maybe Usuario
 
 autenticarUsuario [] _ _ = Nothing
 
 autenticarUsuario (u:us) emailUsuario senhaDigitada
     | email u == emailUsuario &&
-      senha u == senhaDigitada = Just u
+    senha u == senhaDigitada = Just u
     | otherwise = autenticarUsuario us emailUsuario senhaDigitada
