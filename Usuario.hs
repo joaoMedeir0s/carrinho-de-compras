@@ -7,11 +7,15 @@ module Usuario
     buscarUsuario
 ) where
 
+import Types
+import qualified Data.Map as M
+
 data Usuario = Usuario
     {
         nome  :: String,
         email :: String,
-        senha :: String
+        senha :: String,
+        carrinho :: Carrinho
     }
     deriving (Show, Eq)
 
@@ -43,6 +47,7 @@ cadastrarUsuario usuarios nomeUsuario emailUsuario senhaUsuario
                 { nome = nomeUsuario
                 , email = emailUsuario
                 , senha = senhaUsuario
+                , carrinho = M.empty
                 } : usuarios)
 
 -- Realiza autenticação

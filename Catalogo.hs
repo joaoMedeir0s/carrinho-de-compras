@@ -6,11 +6,14 @@ module Catalogo
     atualizarEstoque
 ) where
 
-import Data.List (isInfixOf)
+
+import Data.List (isInfixOf, intercalate)
 import Data.Char (toLower)
 import qualified Data.Map as Map
 import Data.Map (Map)
 import Types
+
+
 
 -- Retorna apenas os produtos que possuem estoque maior que zero
 listarEmEstoque :: Map Int Produto -> [Produto]
@@ -29,3 +32,4 @@ buscarPorNome produtos termo =
 atualizarEstoque :: Map Int Produto -> Int -> Int -> Map Int Produto
 atualizarEstoque produtos idBuscado novoEstoque =
     Map.adjust (\p -> p { prodEstoque = novoEstoque }) idBuscado produtos
+
