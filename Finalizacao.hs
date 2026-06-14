@@ -6,6 +6,7 @@ import Carrinho
 import Usuario
 import qualified Catalogo
 
+-- Estrutura de dados que representa o resumo de um pedido concluído
 data ResumoPedido = ResumoPedido
     { cliente  :: Usuario
     , itens    :: [(Produto, Quantidade)]
@@ -13,12 +14,14 @@ data ResumoPedido = ResumoPedido
     , mensagem :: String
     } deriving (Show, Eq)
 
+-- Formata a lista de itens comprados em texto legível
 formatarItens :: [(Produto, Quantidade)] -> String
 formatarItens [] = ""
 formatarItens ((prod, qtd):restantes) =
     "- " ++ prodNome prod ++ " (x" ++ show qtd ++ "): R$ " ++ show (prodPreco prod * fromIntegral qtd) ++ "\n"
     ++ formatarItens restantes
 
+-- Gera o recibo completo formatado para exibição no terminal
 gerarMensagemSucesso :: Usuario -> [(Produto, Quantidade)] -> Double -> String
 gerarMensagemSucesso user listagem totalVal =
     "===========================================\n" ++
@@ -32,6 +35,7 @@ gerarMensagemSucesso user listagem totalVal =
     "Total Pago: R$ " ++ show totalVal ++ "\n" ++
     "==========================================="
 
+-- Atualiza o estoque do catálogo decrementando as quantidades compradas
 atualizarEstoqueDoPedido :: Catalogo -> [(ProdutoID, Quantidade)] -> Either String Catalogo
 atualizarEstoqueDoPedido cat [] = Right cat
 atualizarEstoqueDoPedido cat ((pid, qtd):restantes) =
@@ -45,6 +49,7 @@ atualizarEstoqueDoPedido cat ((pid, qtd):restantes) =
                         novoCat = Catalogo.atualizarEstoque cat pid novoEstoque
                     in atualizarEstoqueDoPedido novoCat restantes
 
+-- Calcula o valor total dos produtos adicionados ao carrinho
 calcularTotal :: Catalogo -> [(ProdutoID, Quantidade)] -> Double
 calcularTotal _ [] = 0.0
 calcularTotal cat ((pid, qtd):restantes) =
@@ -52,6 +57,7 @@ calcularTotal cat ((pid, qtd):restantes) =
         Nothing -> calcularTotal cat restantes
         Just prod -> (prodPreco prod * fromIntegral qtd) + calcularTotal cat restantes
 
+-- Função principal que valida o carrinho, atualiza estoque e finaliza a compra
 finalizarCompra :: Usuario -> Catalogo -> Carrinho -> Either String (Catalogo, ResumoPedido)
 finalizarCompra user cat carrinho =
     if M.null carrinho
