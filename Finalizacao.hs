@@ -5,6 +5,7 @@ import Types
 import Carrinho
 import Usuario
 import qualified Catalogo
+import Promocao
 
 -- Estrutura de dados que representa o resumo de um pedido concluído
 data ResumoPedido = ResumoPedido
@@ -21,9 +22,9 @@ formatarItens ((prod, qtd):restantes) =
     "- " ++ prodNome prod ++ " (x" ++ show qtd ++ "): R$ " ++ show (prodPreco prod * fromIntegral qtd) ++ "\n"
     ++ formatarItens restantes
 
--- Gera o recibo completo formatado para exibição no terminal
-gerarMensagemSucesso :: Usuario -> [(Produto, Quantidade)] -> Double -> String
-gerarMensagemSucesso user listagem totalVal =
+-- Gera o recibo completo formatado descriminando desconto para exibição no terminal
+gerarMensagemSucesso :: Usuario -> [(Produto, Quantidade)] -> Double -> Double -> String
+gerarMensagemSucesso user listagem subtotal desconto =
     "===========================================\n" ++
     "             COMPRA CONCLUIDA              \n" ++
     "===========================================\n" ++
@@ -32,7 +33,9 @@ gerarMensagemSucesso user listagem totalVal =
     "Itens:\n" ++
     formatarItens listagem ++
     "-------------------------------------------\n" ++
-    "Total Pago: R$ " ++ show totalVal ++ "\n" ++
+    "Subtotal: R$ " ++ show subtotal ++ "\n" ++
+    "Desconto: R$ " ++ show desconto ++ "\n" ++
+    "Total Pago: R$ " ++ show (subtotal - desconto) ++ "\n" ++
     "==========================================="
 
 -- Atualiza o estoque do catálogo decrementando as quantidades compradas
@@ -67,7 +70,10 @@ finalizarCompra user cat carrinho =
                 Left erro -> Left erro
                 Right novoCat ->
                     let listagemItens = visualizarCarrinho cat carrinho
-                        totalVal = calcularTotal cat (M.toList carrinho)
+                        subtotal = calcularTotal cat (M.toList carrinho)
+                        desconto = calcularDesconto subtotal
+                        totalVal = aplicarDesconto subtotal
+                        
                         msg = gerarMensagemSucesso user listagemItens totalVal
                         resumo = ResumoPedido
                             { cliente  = user
