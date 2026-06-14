@@ -13,7 +13,7 @@ O projeto é estruturado de forma puramente funcional, onde cada arquivo represe
 *   **`Carrinho.hs`**: Contém a lógica de manipulação direta do carrinho, permitindo visualizar itens formatados, adicionar com validação de estoque, remover por completo e alterar a quantidade.
 *   **`Catalogo.hs`**: Módulo de gerenciamento e consulta do estoque global de produtos, permitindo buscar itens por categoria, buscar por nome, listar apenas produtos disponíveis em estoque e atualizar a quantidade de um produto.
 *   **`Finalizacao.hs`**: Módulo que gerencia o fechamento da compra. Ele valida o carrinho, calcula o valor total, desconta os itens do estoque geral no catálogo e gera um `ResumoPedido` estruturado com uma mensagem de recibo pronta para exibição.
-*   **`Promocao.hs` (Falta implementar)**: Módulo planejado para gerenciar regras de desconto (ex: cupons de desconto, "Compre 3 e Pague 2", ou promoções automáticas aplicadas a determinadas categorias de produtos).
+*   **`Promocao.hs`**: Módulo planejado para gerenciar regras de desconto (ex: cupons de desconto, "Compre 3 e Pague 2", ou promoções automáticas aplicadas a determinadas categorias de produtos).
 
 ---
 
