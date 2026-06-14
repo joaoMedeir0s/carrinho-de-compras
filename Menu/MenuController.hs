@@ -5,6 +5,9 @@ import System.Console.Haskeline
 import Control.Concurrent (threadDelay)
 import Util
 import Menu.UserMenuController (paginaDoUsuarioMenu)
+import Types
+import qualified Data.Map as M
+
 startMenu :: [Usuario] -> IO()
 startMenu listaUsuario = do
     limparTela
@@ -12,9 +15,6 @@ startMenu listaUsuario = do
     userOption <- inputComMenu startMenuText "Mensagem de erro"
 
     userChoiceStartMenu userOption listaUsuario
-
-{-limparTela :: IO ()
-limparTela = putStr "\ESC[2J\ESC[H"-}
 
 userChoiceStartMenu :: String -> [Usuario] -> IO()
 userChoiceStartMenu userChoice listaUsuario 
@@ -38,35 +38,25 @@ menuLoginUsuario listaUsuario = do
 loginFeitoMenu :: Usuario -> IO()
 loginFeitoMenu usuario = do
     loginFeitoText <- readFile "Menu/SpritesMenu/Login/login_feito_feliz_menu.txt"
+    limparTela
     putStrLn loginFeitoText
     threadDelay 2000000
-    paginaDoUsuarioMenu usuario
+    catalogo <- carregarCatalogo
+    paginaDoUsuarioMenu usuario catalogo
 
      
 
 loginFailedMenu :: [Usuario] -> IO ()
 loginFailedMenu listaUsuario = do
+    limparTela
     loginFalhoMensagem <- readFile "Menu/SpritesMenu/Login/login_falhou_triste_menu.txt"
     putStrLn loginFalhoMensagem
     threadDelay 1500000
+    limparTela
     tenteNovamente <- readFile "Menu/SpritesMenu/tente_novamente.txt" 
     putStrLn tenteNovamente
     threadDelay 1000000
     startMenu listaUsuario
-
-
-inputSenhaUsuario :: String -> String -> IO String
-inputSenhaUsuario menu mensagemDeErro = do
-    limparTela
-    putStrLn menu
-    userSenha <- runInputT defaultSettings $ getPassword(Just '*') "Digite sua senha: "
-    case userSenha of
-        Just p -> return p
-        Nothing -> do
-            putStrLn mensagemDeErro 
-            inputSenhaUsuario menu mensagemDeErro
-            return ""
-
 
 menuCadastroUsuario :: [Usuario] -> IO()
 menuCadastroUsuario listaUsuario = do
@@ -84,9 +74,11 @@ menuCadastroUsuario listaUsuario = do
 
 cadastroRealizado :: [Usuario] -> IO()
 cadastroRealizado listaUsuario = do
+    limparTela
     cadastroRealizadoMensagem <- readFile "Menu/SpritesMenu/Cadastro/cadastro_realizado.txt"
     putStrLn cadastroRealizadoMensagem
     threadDelay 1500000
+    limparTela
     falaLoginMensagem <- readFile "Menu/SpritesMenu/Login/faca_login.txt"
     putStrLn falaLoginMensagem
     threadDelay 1000000
@@ -94,18 +86,36 @@ cadastroRealizado listaUsuario = do
 
 cadastroFalhou :: [Usuario] -> IO()
 cadastroFalhou listaUsuario = do
+    limparTela
     usuarioExistente <- readFile "Menu/SpritesMenu/Cadastro/usuario_ja_existe.txt"
     putStrLn usuarioExistente
     threadDelay 2000000
     startMenu listaUsuario
 
-{-inputComMenu :: String -> String -> IO String
-inputComMenu menu mensagemDeErro = do
-    limparTela
-    putStrLn menu
-    userData <-  runInputT defaultSettings $ getInputLine "Digite aqui: "
-    case userData of
-        Just d -> return d
-        Nothing -> do
-            putStrLn mensagemDeErro
-            inputComMenu menu mensagemDeErro -}
+carregarCatalogo :: IO Catalogo
+carregarCatalogo = do
+  conteudo <- readFile "catalogo.txt"
+  let linhas   = lines conteudo
+  let produtos = map parseProduto linhas
+  return (M.fromList [(prodId p, p) | p <- produtos])
+
+
+parseProduto :: String -> Produto
+parseProduto linha =
+  let [idStr, nome, precoStr, desc, estoqueStr, categoria] = splitOn ',' linha
+  in Produto
+      { prodId        = read idStr
+      , prodNome      = nome
+      , prodPreco     = read precoStr
+      , prodDesc      = desc
+      , prodEstoque   = read estoqueStr
+      , prodCategoria = categoria
+      }
+
+
+splitOn :: Char -> String -> [String]
+splitOn _ "" = [""]
+splitOn delim (c:cs)
+  | c == delim = "" : resto
+  | otherwise  = (c : head resto) : tail resto
+  where resto = splitOn delim cs

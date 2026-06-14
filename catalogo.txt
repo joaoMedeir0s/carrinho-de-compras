@@ -1,0 +1,15 @@
+1,Assim Falou Zaratustra,45.90,Uma das obras mais famosas de Nietzsche sobre o super-homem,50,Filosofia
+2,Além do Bem e do Mal,38.90,Crítica à filosofia tradicional e à moral,45,Filosofia
+3,A Genealogia da Moral,35.90,Análise crítica dos valores morais ocidentais,40,Filosofia
+4,O Nascimento da Tragédia,32.90,Sobre as forças apolíneas e dionisíacas na arte,35,Filosofia
+5,Crepúsculo dos Ídolos,29.90,Crítica aos filósofos e à cultura moderna,30,Filosofia
+6,O Anticristo,28.90,Crítica radical ao cristianismo,30,Filosofia
+7,Ecce Homo,27.90,Autobiografia filosófica de Nietzsche,25,Filosofia
+8,Humano Demasiado Humano,36.90,Reflexões aforísticas sobre a natureza humana,35,Filosofia
+9,Aurora,34.90,Reflexões sobre os preconceitos morais,30,Filosofia
+10,A Gaia Ciência,37.90,Contém o aforismo da morte de Deus,40,Filosofia
+11,Para Além do Bem e do Mal,38.90,Prelúdio a uma filosofia do futuro,35,Filosofia
+12,O Caso Wagner,26.90,Crítica ao compositor Richard Wagner,20,Filosofia
+13,Nietzsche Contra Wagner,25.90,Continuação da crítica a Wagner,20,Filosofia
+14,Ditirambos de Dionísio,24.90,Poemas filosóficos de Nietzsche,15,Poesia
+15,Segunda Consideração Intempestiva,31.90,Sobre a utilidade e desvantagem da história,25,Filosofia
