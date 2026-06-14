@@ -11,13 +11,13 @@ X               | (_| |  __/\__ \  __/| | (_| |  |_|                         X
 X                \__,_|\___||___/\___|/ |\__,_|  (_)                         X
 X                                   |__/                                     X
 X                                                                            X
+X                           (V)er catálogo                                   X
+X                                                                            X
 X                         (A)cessar carrinho                                 X
 X                                                                            X
 X                         (F)inalizar compra                                 X
 X                                                                            X
 X                              (S)air                                        X
-X                                                                            X
-X                                                                            X
 X                                                                            X
 X                                                                            X
 XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX

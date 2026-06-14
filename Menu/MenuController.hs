@@ -3,7 +3,8 @@ import Usuario
 import System.IO ( hFlush, stdout )
 import System.Console.Haskeline
 import Control.Concurrent (threadDelay)
-
+import Util
+import Menu.UserMenuController (paginaDoUsuarioMenu)
 startMenu :: [Usuario] -> IO()
 startMenu listaUsuario = do
     limparTela
@@ -12,8 +13,8 @@ startMenu listaUsuario = do
 
     userChoiceStartMenu userOption listaUsuario
 
-limparTela :: IO ()
-limparTela = putStr "\ESC[2J\ESC[H"
+{-limparTela :: IO ()
+limparTela = putStr "\ESC[2J\ESC[H"-}
 
 userChoiceStartMenu :: String -> [Usuario] -> IO()
 userChoiceStartMenu userChoice listaUsuario 
@@ -31,22 +32,17 @@ menuLoginUsuario listaUsuario = do
     senha <- inputSenhaUsuario  menuSenha "Senha inválida"
     let tentativa = autenticarUsuario listaUsuario email senha
     case tentativa of
-        Just t -> loginFeitoMenu
+        Just t -> loginFeitoMenu t
         Nothing -> loginFailedMenu listaUsuario
 
-loginFeitoMenu :: IO()
-loginFeitoMenu = do
+loginFeitoMenu :: Usuario -> IO()
+loginFeitoMenu usuario = do
     loginFeitoText <- readFile "Menu/SpritesMenu/Login/login_feito_feliz_menu.txt"
     putStrLn loginFeitoText
     threadDelay 2000000
-    paginaDoUsuarioMenu
+    paginaDoUsuarioMenu usuario
 
-paginaDoUsuarioMenu :: IO ()
-paginaDoUsuarioMenu = do
-    paginaDoUsuario <- readFile "Menu/SpritesMenu/pagina_do_usuario.txt"
-    inputComMenu paginaDoUsuario ""
-    return ()
-
+     
 
 loginFailedMenu :: [Usuario] -> IO ()
 loginFailedMenu listaUsuario = do
@@ -103,7 +99,7 @@ cadastroFalhou listaUsuario = do
     threadDelay 2000000
     startMenu listaUsuario
 
-inputComMenu :: String -> String -> IO String
+{-inputComMenu :: String -> String -> IO String
 inputComMenu menu mensagemDeErro = do
     limparTela
     putStrLn menu
@@ -112,4 +108,4 @@ inputComMenu menu mensagemDeErro = do
         Just d -> return d
         Nothing -> do
             putStrLn mensagemDeErro
-            inputComMenu menu mensagemDeErro
+            inputComMenu menu mensagemDeErro -}
