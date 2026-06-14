@@ -14,3 +14,9 @@ inputComMenu menu mensagemDeErro = do
 
 limparTela :: IO ()
 limparTela = putStr "\ESC[2J\ESC[H"
+
+exibirOpcaoInvalida :: IO()
+exibirOpcaoInvalida = do
+    mensagemDeErro <- readFile "Menu/SpritesMenu/opcao_invalida.txt"
+    putStrLn mensagemDeErro
+    
