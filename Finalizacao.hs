@@ -74,7 +74,7 @@ finalizarCompra user cat carrinho =
                         desconto = calcularDesconto subtotal
                         totalVal = aplicarDesconto subtotal
                         
-                        msg = gerarMensagemSucesso user listagemItens totalVal
+                        msg = gerarMensagemSucesso user listagemItens subtotal desconto
                         resumo = ResumoPedido
                             { cliente  = user
                             , itens    = listagemItens
